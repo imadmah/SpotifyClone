@@ -24,8 +24,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.spotifyclone.ui.AlbumViewScreen
+import com.example.spotifyclone.ui.HomeScreen
 import com.example.spotifyclone.ui.LibraryScreen
+import com.example.spotifyclone.ui.SettingsScreen
 import com.example.spotifyclone.ui.StartScreen
+
 
 
 class MainActivity : ComponentActivity() {
@@ -52,10 +56,16 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable("home") {
-                            HomeScreen(onAlbumClick = { /* Handle Album click */ })
+                            HomeScreen({ navController.navigate("settings") },{ navController.navigate("album") })
                         }
                         composable("library") {
                             LibraryScreen()
+                        }
+                        composable("settings"){
+                            SettingsScreen()
+                        }
+                        composable("album"){
+                            AlbumViewScreen{ navController.navigate("home") }
                         }
                     }
                 }
@@ -75,17 +85,20 @@ class MainActivity : ComponentActivity() {
             ) { innerPadding ->
                 NavHost(
                     navController = navController,
-                    startDestination = "start",
+                    startDestination = "home",
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    composable("start") {
-                        LibraryScreen()
-                    }
                     composable("home") {
-                        HomeScreen(onAlbumClick = { /* Handle Album click */ })
+                        HomeScreen({ navController.navigate("settings") },{ navController.navigate("album") })
                     }
                     composable("library") {
                         LibraryScreen()
+                    }
+                    composable("settings"){
+                        SettingsScreen()
+                    }
+                    composable("album"){
+                        AlbumViewScreen{ navController.navigate("home") }
                     }
                 }
             }
@@ -133,8 +146,6 @@ fun NavBarItem(icon: ImageVector, text: String, onClick: () -> Unit,modifier: Mo
             modifier = modifier
                 .clickable(onClick = onClick)
                 .padding(vertical = 8.dp)
-
-
 
         ) {
             Icon(

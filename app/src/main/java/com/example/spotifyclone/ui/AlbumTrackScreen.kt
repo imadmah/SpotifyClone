@@ -2,6 +2,7 @@ package com.example.spotifyclone.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,9 +14,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PlayArrow
@@ -29,56 +33,84 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.spotifyclone.R
 import com.example.spotifyclone.ui.theme.ScreenGrey
-
+import com.example.spotifyclone.ui.theme.SpotifyGreen
 
     @Composable
-    fun AlbumViewScreen() {
+    fun AlbumViewScreen(onclick: () -> Unit) {
         Column(
+
+
             modifier = Modifier
                 .background(ScreenGrey)
                 .fillMaxSize()
+                .padding(8.dp)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.cover2),
-                    contentDescription = "Album Cover",
-                    modifier = Modifier.size(100.dp)
+            Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "",tint = Color.White,
+                modifier = Modifier.size(32.dp)
+                    .clickable {onclick() }
                 )
-                Spacer(modifier = Modifier.width(16.dp))
-                Column {
+            Spacer(modifier = Modifier.size(16.dp))
+
+            Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.cover2),
+                        contentDescription = "Album Cover",
+                        modifier = Modifier.size(220.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.size(32.dp))
+                Column(
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                ) {
+
                     Text(
                         text = "1 (Remastered)",
                         color = Color.White,
                         style = MaterialTheme.typography.headlineMedium
                     )
-                    Text(
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier=Modifier.padding(vertical = 8.dp)
+
+                    )
+                    {
+                    Image( painterResource(id =R.drawable.lana_ic ) , contentDescription ="" )
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        Text(
                         text = "The Beatles",
                         color = Color.Gray,
                         style = MaterialTheme.typography.labelMedium
                     )
+
+
+                    }
                 }
-            }
+
             Spacer(modifier = Modifier.height(16.dp))
-            AlbumTrack("Love Me Do - Mono / Remastered")
-            AlbumTrack("From Me to You - Mono / Remastered", isPlaying = true)
-            AlbumTrack("She Loves You - Mono / Remastered")
-            AlbumTrack("I Want To Hold Your Hand - Remastered 2015")
+            AlbumTrack("Love Me Do - Mono / Remastered","The Beatles")
+            AlbumTrack("From Me to You - Mono / Remastered","The Beatles", isPlaying = true)
+            AlbumTrack("She Loves You - Mono / Remastered","The Beatles")
+            AlbumTrack("I Want To Hold Your Hand - Remastered 2015","The Beatles")
         }
     }
 
     @Composable
-    fun AlbumTrack(trackName: String, isPlaying: Boolean = false) {
+    fun AlbumTrack(trackName: String,trackSigners: String, isPlaying: Boolean = false) {
+        Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .padding(horizontal = 16.dp)
         ) {
             if (isPlaying) {
                 Icon(
@@ -89,11 +121,22 @@ import com.example.spotifyclone.ui.theme.ScreenGrey
             }
             Text(
                 text = trackName,
-                color = Color.White,
+                color =  if (isPlaying) SpotifyGreen else Color.White,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(start = if (isPlaying) 8.dp else 0.dp)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(imageVector = Icons.Default.MoreVert ,contentDescription ="Song Menu", tint = Color.White )
+        }
+            Text(
+                text = trackSigners,
+                color = Color.Gray,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(horizontal = 32.dp, vertical = 2.dp)
             )
         }
+
+
+        Spacer(modifier = Modifier.size(16.dp))
     }
 
     @Composable
