@@ -42,8 +42,6 @@ import com.example.spotifyclone.ui.theme.SpotifyGreen
     @Composable
     fun AlbumViewScreen(onclick: () -> Unit) {
         Column(
-
-
             modifier = Modifier
                 .background(ScreenGrey)
                 .fillMaxSize()

@@ -11,16 +11,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,12 +36,15 @@ fun ProfileBar(screen:String,items:List<String>,onclick : () -> Unit ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier=Modifier.fillMaxWidth()
-            .padding(vertical = 16.dp)
+            .padding(vertical = 8.dp, horizontal = 8.dp)
+            .padding(top = 16.dp)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.lolo_zouai_ic),
+            painter = painterResource(id = R.drawable.profile_ic),
             contentDescription = "Profile",
-            modifier = Modifier.size(32.dp)
+            modifier = Modifier
+                .size(32.dp)
+                .clip(CircleShape)
         )
         Spacer(modifier = Modifier.width(16.dp))
         Text(
@@ -58,22 +64,30 @@ fun ProfileBar(screen:String,items:List<String>,onclick : () -> Unit ) {
         )}
         else {
             Icon(
-                imageVector = Icons.Default.Notifications,
+                painterResource(id = R.drawable.notification_ic) ,
                 tint = Color.White,
                 contentDescription = "settings",
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(20.dp)
+                    .clickable { }
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Icon(
+                painterResource(id = R.drawable.orientation_lock_ic) ,
+                tint = Color.White,
+                contentDescription = "settings",
+                modifier = Modifier.size(20.dp)
                     .clickable { }
             )
             Spacer(modifier = Modifier.width(16.dp))
 
-                Icon(
+            Icon(
                     painterResource(id = R.drawable.settings_ic) ,
                     tint = Color.White,
                     contentDescription = "settings",
                     modifier = Modifier
                         .size(24.dp)
                         .clickable {onclick() }
-                )
+            )
 
         }
 

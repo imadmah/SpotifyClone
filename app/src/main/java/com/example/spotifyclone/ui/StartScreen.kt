@@ -7,9 +7,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.spotifyclone.R
@@ -30,22 +32,31 @@ fun StartScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(ScreenGrey)
-            .padding(horizontal = 32.dp, vertical = 48.dp),
+            .background(ScreenGrey),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Top
     ) {
-        Image(painter = painterResource(id = R.drawable.spotify_primary_logo), contentDescription = null, modifier = Modifier.size(60.dp))
-        Spacer(modifier = Modifier.height(32.dp))
+        Image(painter = painterResource(id = R.drawable.login_bg), contentDescription = null, modifier = Modifier
+            .fillMaxWidth()
+            .height(350.dp)
+        )
+        Image(painter = painterResource(id = R.drawable.spotify_primary_logo), contentDescription = null, modifier = Modifier.size(50.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Text("Millions of Songs.", color = Color.White, fontSize = 24.sp,fontWeight = FontWeight.Bold)
         Text("Free on Spotify.", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(32.dp))
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding( horizontal = 32.dp, vertical = 8.dp)
+
+        ) {
       Button(
             onClick = onSignUpClick,
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = SpotifyGreen, contentColor = Color.Black) ,
         ) {
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             Text("Sign up free", fontWeight = FontWeight.Bold, fontSize = 16.sp)
         }
         Spacer(modifier = Modifier.height(4.dp))
@@ -125,4 +136,5 @@ fun StartScreen(
             Text("Log in", color = Color.White,fontWeight = FontWeight.Bold)
         }
     }
+        }
 }
