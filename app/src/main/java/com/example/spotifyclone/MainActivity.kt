@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
             ) { innerPadding ->
                 NavHost(
                     navController = navController,
-                    startDestination = "home",
+                    startDestination = "album",
                     modifier = Modifier.padding(innerPadding)
                 ) {
                     composable("start") {

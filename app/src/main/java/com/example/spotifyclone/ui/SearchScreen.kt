@@ -12,10 +12,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,15 +35,21 @@ fun SearchScreen() {
             .background(Color.Black)
 
     ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding( 16.dp),
+
+        ) {
         Text(
             text = "Search",
             color = Color.White,
-            modifier = Modifier
-                .padding( 16.dp),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
-
-        )
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Image(painter = painterResource(id = R.drawable.camera_ic), contentDescription ="",Modifier.width(25.dp).height(22.dp) )
+        }
 
 
         TextField(
@@ -49,24 +58,32 @@ fun SearchScreen() {
             placeholder = {
                 Text(text = "Artists, songs, or podcasts", color = Color.Gray)
             },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Search Icon",
+                    tint = Color.Gray
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(12.dp)
                 .background(Color.White, shape = RoundedCornerShape(8.dp))
         )
 
-        Column(modifier = Modifier.padding(16.dp)
+        Column(modifier = Modifier
+            .padding(16.dp)
             .fillMaxWidth()
         ) {
             Text(
                 text = "Your top genres",
-                color = Color.White
-            )
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White,
 
-            LazyRow(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .fillMaxWidth()
+                )
+            Spacer(modifier = Modifier.size(8.dp))
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
             ) {
                 items(listOf(
                     "Pop" to Color(0xFF9854B2),
@@ -82,20 +99,17 @@ fun SearchScreen() {
             Text(
                 text = "Popular podcast categories",
                 color = Color.White,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(top = 16.dp)
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            Spacer(modifier = Modifier.size(8.dp))
 
-            LazyRow(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .fillMaxWidth()
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
             ) {
                 items(listOf(
                     "News & Politics" to Color(0xFF3371E4),
                     "Comedy" to Color(0xFFCF4321),
-                    "Charts" to Color(0xFF75A768),
-                    "Made for you" to Color(0xFF8768A7)
                 )) { (category, color) ->
                     GenreCard(
                         text = category,
@@ -107,9 +121,11 @@ fun SearchScreen() {
             Text(
                 text = "Browse all",
                 color = Color.White,
-                modifier = Modifier.padding(top = 16.dp)
-            )
-            Spacer(modifier = Modifier.size(16.dp))
+                modifier = Modifier.padding(top = 16.dp),
+                        fontWeight = FontWeight.SemiBold,
+
+                )
+            Spacer(modifier = Modifier.size(8.dp))
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
@@ -139,12 +155,11 @@ fun GenreCard(text: String, backgroundColor: Color, modifier: Modifier) {
         modifier = modifier
             .height(110.dp)
             .width(190.dp)
-            .padding( 8.dp)
-             // Adjust height as needed
+            .padding(8.dp)
+
     ) {
         Box(
             modifier = modifier
-
                 .fillMaxWidth(),
             contentAlignment = Alignment.BottomEnd
 
@@ -153,14 +168,15 @@ fun GenreCard(text: String, backgroundColor: Color, modifier: Modifier) {
                 text = text,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.TopStart)
-                    .padding( 8.dp)
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(8.dp)
             )
             Image(
                 painter = painterResource(id = R.drawable.mini_album_card),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(72.dp)
                     .align(Alignment.BottomEnd)
             )
         }

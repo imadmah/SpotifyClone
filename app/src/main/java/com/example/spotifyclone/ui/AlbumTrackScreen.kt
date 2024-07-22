@@ -1,5 +1,6 @@
 package com.example.spotifyclone.ui
 
+import android.util.Size
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
@@ -30,7 +32,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,8 +52,9 @@ import com.example.spotifyclone.ui.theme.SpotifyGreen
                 .padding(8.dp)
         ) {
             Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "",tint = Color.White,
-                modifier = Modifier.size(32.dp)
-                    .clickable {onclick() }
+                modifier = Modifier
+                    .size(32.dp)
+                    .clickable { onclick() }
                 )
             Spacer(modifier = Modifier.size(16.dp))
 
@@ -58,7 +63,7 @@ import com.example.spotifyclone.ui.theme.SpotifyGreen
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.cover2),
+                        painter = painterResource(id = R.drawable.members2),
                         contentDescription = "Album Cover",
                         modifier = Modifier.size(220.dp)
                     )
@@ -70,27 +75,59 @@ import com.example.spotifyclone.ui.theme.SpotifyGreen
                 ) {
 
                     Text(
-                        text = "1 (Remastered)",
+                        text = "Members",
                         color = Color.White,
                         style = MaterialTheme.typography.headlineMedium
                     )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier=Modifier.padding(vertical = 8.dp)
+                    Row{
+                        Column {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier=Modifier.padding(vertical = 2.dp)
 
-                    )
-                    {
-                    Image( painterResource(id =R.drawable.lana_ic ) , contentDescription ="" )
-                        Spacer(modifier = Modifier.width(8.dp))
+                            )
+                            {
+                                Image( painterResource(id =R.drawable.members2 ) , contentDescription ="" ,
+                                    Modifier
+                                        .clip(
+                                            CircleShape
+                                        )
+                                        .size(25.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "The Beatles",
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.labelMedium
+                                )
 
-                        Text(
-                        text = "The Beatles",
-                        color = Color.Gray,
-                        style = MaterialTheme.typography.labelMedium
-                    )
+                            }
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
 
 
+                                )
+                            {
+                                Text(
+                                    text = "Album ",
+                                    color = Color.Gray,
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+
+                                Text(
+                                    text = "2020",
+                                    color = Color.Gray,
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                            }
+
+                        }
+                        Spacer(modifier = Modifier.weight(1f))
+                        Image( painterResource(id =R.drawable.play_ic ) , contentDescription ="",
+                            Modifier.size(56.dp).clickable {  } )
                     }
+
+
                 }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -103,34 +140,50 @@ import com.example.spotifyclone.ui.theme.SpotifyGreen
 
     @Composable
     fun AlbumTrack(trackName: String,trackSigners: String, isPlaying: Boolean = false) {
-        Column {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .clickable {  }
+        ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(vertical = 2.dp)
+
+
         ) {
             if (isPlaying) {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = "Playing",
-                    tint = Color.Green
-                )
+                Image(painter = painterResource(id = R.drawable.playing_ic), contentDescription ="" ,Modifier.size(12.dp))
             }
             Text(
                 text = trackName,
                 color =  if (isPlaying) SpotifyGreen else Color.White,
                 style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.let {
+                    if (isPlaying) {
+                        it.padding(horizontal = 8.dp)
+                    } else {
+                        it
+                    }
+                }
             )
             Spacer(modifier = Modifier.weight(1f))
-            Icon(imageVector = Icons.Default.MoreVert ,contentDescription ="Song Menu", tint = Color.White )
+            Icon(imageVector = Icons.Default.MoreVert ,contentDescription ="Song Menu", tint = Color.White)
         }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+
+        ){
+                Image(painter = painterResource(id = R.drawable.down_song_btn_ic), contentDescription ="" ,Modifier.size(12.dp))
             Text(
                 text = trackSigners,
                 color = Color.Gray,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(horizontal = 32.dp, vertical = 2.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
+            }
         }
 
 
